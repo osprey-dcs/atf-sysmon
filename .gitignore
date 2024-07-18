@@ -1,0 +1,8 @@
+*.local
+O.*/
+/bin/
+/dbd/
+/db/
+as/
+envPaths
+.iocsh_history
