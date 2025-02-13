@@ -1,0 +1,25 @@
+[Unit]
+Description=IOC for system monitoring %i
+After=network.target
+Wants=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/local/epics/usr/bin/procServ \
+  --foreground --logfile - --name atf-sysmon%i \
+  --ignore ^D^C^] --logoutcmd ^D \
+  --chdir /opt/atf-sysmon/iocBoot/%i \
+  --info-file %t/atf-sysmon%i/info \
+  --port 0 \
+  --port unix:%t/atf-sysmon%i/control \
+  ./st.cmd
+
+RuntimeDirectory=atf-sysmon%i
+StandardOutput=syslog
+StandardError=inherit
+SyslogIdentifier=atf-sysmon%i
+User=atf
+Group=atf
+
+[Install]
+WantedBy=multi-user.target
