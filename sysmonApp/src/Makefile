@@ -22,6 +22,19 @@ sysmon_LIBS += linStat
 sysmon_DBD += asSupport.dbd
 sysmon_LIBS += autosave
 
+# Link QSRV
+ifdef PVXS_MAJOR_VERSION # prefer v2
+sysmon_DBD += pvxsIoc.dbd
+sysmon_LIBS += pvxsIoc pvxs
+else
+ifdef EPICS_QSRV_MAJOR_VERSION # fallback to v1
+sysmon_LIBS += qsrv
+sysmon_LIBS += $(EPICS_BASE_PVA_CORE_LIBS)
+sysmon_DBD += PVAServerRegister.dbd
+sysmon_DBD += qsrv.dbd
+endif
+endif
+
 # sysmon_registerRecordDeviceDriver.cpp derives from sysmon.dbd
 sysmon_SRCS += sysmon_registerRecordDeviceDriver.cpp
 sysmon_SRCS += sysmonMain.cpp
