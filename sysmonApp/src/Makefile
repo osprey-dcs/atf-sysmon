@@ -22,6 +22,11 @@ sysmon_LIBS += linStat
 sysmon_DBD += asSupport.dbd
 sysmon_LIBS += autosave
 
+ifneq (,$(RECSYNC))
+sysmon_DBD += reccaster.dbd
+sysmon_LIBS += reccaster
+endif
+
 # Link QSRV
 ifdef PVXS_MAJOR_VERSION # prefer v2
 sysmon_DBD += pvxsIoc.dbd
